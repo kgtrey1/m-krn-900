@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Utilisation de la box locale pour éviter tout téléchargement
+  config.vm.box = "generic/debian10"
+
+  # Configuration pour libvirt
+  config.vm.provider "libvirt" do |libvirt|
+    libvirt.cpus = 2
+    libvirt.memory = 2048
+  end
+
+  # Configuration pour VirtualBox (si jamais tu changes de provider)
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 2
+    vb.memory = 2048
+  end
+
+  # Synchronisation automatique du repo dans la VM
+  config.vm.synced_folder "/home/aoshiniro/Delivery/tek5/M-KRN-900-PAR-9-2-kernelintroproj-guilhem.sante/", "/home/vagrant/repo", type: "rsync"
+
+  # Provisioning : installation des outils nécessaires
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt update -y
+    sudo apt install -y build-essential linux-headers-$(uname -r) git vim
+  SHELL
+end

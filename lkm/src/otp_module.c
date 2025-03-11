@@ -49,7 +49,7 @@ static int init_otp_method(OtpMethod_t *method)
     method->misc_device.fops = &method->fops;
     method->misc_device.minor = MISC_DYNAMIC_MINOR;
     method->misc_device.name = device_name;
-    method->misc_device.mode = S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR;
+    method->misc_device.mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;;
     error = misc_register(&method->misc_device);
     if (error)
     {

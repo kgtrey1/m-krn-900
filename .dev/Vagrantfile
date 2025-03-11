@@ -1,0 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    if RUBY_PLATFORM.include?("darwin")
+        # Alternatives box for sillicon chip MacOS platforms
+        config.vm.box = "bento/ubuntu-22.04"
+        config.vm.box_version = "202407.22.0"
+      else
+        # Official box (~> Image) for Ubuntu 22.04
+        config.vm.box = "ubuntu/jammy64"
+        config.vm.box_version = "20241002.0.0"
+    end
+
+    # Run bootstrap script to install required kernel
+    # development dependencies.
+    config.vm.provision "shell", path: "bootstrap.sh"
+end

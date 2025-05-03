@@ -28,5 +28,6 @@ typedef struct OneTimePassword {
 
 void create_password(const char *method, const char *password, bool assigned, size_t validity);
 size_t consume_password(const char *method, const char *password);
+void delete_password(void);
 
 #endif /* KOTP_H */

@@ -5,11 +5,13 @@
 
 #include "kotp.h"
 #include "dict.h"
+#include "time.h"
 
 OtpMethod_t methods[] = {
     { dict_init, dict_clean, dict_get_fops, "dict", false },
+    { totp_init, totp_clean, totp_get_fops, "time", false },
 };
-const int otp_amount = 1;
+const int otp_amount = 2;
 
 static const char *create_device_name(const char *method_name)
 {
@@ -63,9 +65,10 @@ static int init_otp_method(OtpMethod_t *method)
 static int __init otp_init(void)
 {
     pr_info("kotp: Loading module\n");
-
-    for (int i = 0; i < otp_amount; i++) {
-        if (init_otp_method(&methods[i]) != 0) {
+    for (int i = 0; i < otp_amount; i++)
+    {
+        if (init_otp_method(&methods[i]) != 0)
+        {
             pr_info("kotp: Failed loading %s method.\n", methods[i].name);
         }
         else {
@@ -79,8 +82,10 @@ static int __init otp_init(void)
 static void __exit otp_exit(void)
 {
     pr_info("kotp: Unloading module.\n");
-    for (int i = 0; i < otp_amount; i++) {
-        if (methods[i].is_init) {
+    for (int i = 0; i < otp_amount; i++)
+    {
+        if (methods[i].is_init)
+        {
             pr_info("kotp: Unloading method %s.\n", methods[i].name);
             misc_deregister(&methods[i].misc_device);
             methods[i].clean();
@@ -91,6 +96,8 @@ static void __exit otp_exit(void)
             pr_info("kotp: %s method unloaded.\n", methods[i].name);
         }
     }
+    pr_info("kotp: Deleting passwords.\n");
+    delete_password();
     pr_info("kotp: Module unloaded.\n");
 }
 

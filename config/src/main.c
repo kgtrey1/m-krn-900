@@ -19,6 +19,10 @@ int main(int argc, char *argv[])
     {
         return dict_entry(argv, argc);
     }
+    if (strcmp(argv[1], "time") == 0)
+    {
+        return time_entry(argv, argc);
+    }
     fprintf(stderr, "Error: unknown method: %s. Use -h for help.\n", argv[1]);
     return 1;
 }

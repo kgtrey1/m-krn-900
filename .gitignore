@@ -59,3 +59,7 @@ dkms.conf
 
 # otpctl compiled binary
 src/otpctl/otpctl
+
+# generated binaries
+otp_client
+otp_config

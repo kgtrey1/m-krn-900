@@ -83,8 +83,8 @@ static int help(char** argv, int argc)
 {
     printf("dict commands:\n");
     printf("- config: Display the list of word used to generate password and the expiration time.\n");
-    printf("- add <string>: Add a word to the dictionnary.\n");
-    printf("- delete <int>: Delete a word from the dictionnary, use list to get the id.\n");
+    printf("- add <string>: Add a word to the dictionary.\n");
+    printf("- delete <int>: Delete a word from the dictionary, use list to get the id.\n");
     printf("- time <int>: Time in ms before a password is expired, 0 means no expiration.\n");
     printf("- help: Display this message.\n");
     return 0;

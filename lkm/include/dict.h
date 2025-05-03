@@ -7,18 +7,18 @@ void dict_get_fops(struct file_operations *fops);
 ssize_t dict_clean(void);
 ssize_t dict_init(void);
 
-typedef struct dictionnary {
+typedef struct dictionary {
     int id;
     char *word;
-    struct dictionnary *next;
-} dictionnary_t;
+    struct dictionary *next;
+} dictionary_t;
 
-void delete_dictionnary(void);
-int dictionnary_add_word(const char *word);
-int dictionnary_remove_word(int id);
-int get_dictionnary_length(void);
-dictionnary_t *find_node_by_word(const char *word);
-dictionnary_t *get_dictionnary(void);
-dictionnary_t *get_dictionnary_word_at(int position);
+void delete_dictionary(void);
+int dictionary_add_word(const char *word);
+int dictionary_remove_word(int id);
+int get_dictionary_length(void);
+dictionary_t *find_node_by_word(const char *word);
+dictionary_t *get_dictionary(void);
+dictionary_t *get_dictionary_word_at(int position);
 
 #endif /* OTP_DICT_H */

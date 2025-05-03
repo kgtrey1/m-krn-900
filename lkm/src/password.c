@@ -151,7 +151,7 @@ size_t consume_password(const char *method, const char *password)
 }
 
 /**
- * Delete the dictionnary, useful for clean up
+ * Delete the dictionary, useful for clean up
  */
 void delete_password()
 {

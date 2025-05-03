@@ -1,5 +1,5 @@
 obj-m := otp_module.o
-otp_module-objs := src/otp_module.o src/methods/dict.o src/methods/time.o src/utils/dictionnary.o src/password.o
+otp_module-objs := src/otp_module.o src/methods/dict.o src/methods/time.o src/utils/dictionary.o src/password.o
 
 KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)

@@ -25,11 +25,11 @@ static long add(data_transfer_t *arg)
         snprintf(arg->resp, MAX_BUFFER_SIZE, "Error: This word is already in the list.\n");
         return 1;
     }
-    int res = dictionnary_add_word(arg->data);
+    int res = dictionary_add_word(arg->data);
     
     if (res == 0)
     {
-        snprintf(arg->resp, MAX_BUFFER_SIZE, "Success: %s has been added to the dictionnary.\n", (char *)arg->data);
+        snprintf(arg->resp, MAX_BUFFER_SIZE, "Success: %s has been added to the dictionary.\n", (char *)arg->data);
     }
     else
     {
@@ -54,7 +54,7 @@ static long delete(data_transfer_t *arg)
         snprintf(arg->resp, MAX_BUFFER_SIZE, "Error: Failed to convert argument\n");
         return 1;
     }
-    if (dictionnary_remove_word(result) != 0)
+    if (dictionary_remove_word(result) != 0)
     {
         snprintf(arg->resp, MAX_BUFFER_SIZE, "Error: Could not find a word associated to this id\n");
         return 1;
@@ -65,8 +65,8 @@ static long delete(data_transfer_t *arg)
 
 static long config(data_transfer_t *arg)
 {
-    struct dictionnary *dict = get_dictionnary();
-    struct dictionnary *temp = dict;
+    struct dictionary *dict = get_dictionary();
+    struct dictionary *temp = dict;
     int current_length = 0;
 
     snprintf(arg->resp, MAX_BUFFER_SIZE, "Expiration time: %d\nWordlist:\n", expiration_time);
@@ -146,23 +146,23 @@ static ssize_t otp_read(struct file *file, char __user *buf, size_t len, loff_t 
         return 0;
     }
     char pw_buf[128];
-    int dictionnary_length = get_dictionnary_length();
+    int dictionary_length = get_dictionary_length();
 
-    if (dictionnary_length < 2)
+    if (dictionary_length < 2)
     {
         snprintf(pw_buf, 128, "Error: Not enough word to generate a password\n");
     }
     else
     {
-        int idx1 = get_random_u32() % dictionnary_length;
-        int idx2 = get_random_u32() % dictionnary_length;
+        int idx1 = get_random_u32() % dictionary_length;
+        int idx2 = get_random_u32() % dictionary_length;
     
         while (idx2 == idx1)
         {
-            idx2 = get_random_u32() % dictionnary_length;
+            idx2 = get_random_u32() % dictionary_length;
             msleep(1);
         }
-        snprintf(pw_buf, 128, "%s%s", get_dictionnary_word_at(idx1)->word, get_dictionnary_word_at(idx2)->word);
+        snprintf(pw_buf, 128, "%s%s", get_dictionary_word_at(idx1)->word, get_dictionary_word_at(idx2)->word);
 
         if (expiration_time == 0)
         {
@@ -235,8 +235,8 @@ void dict_get_fops(struct file_operations *fops)
 
 ssize_t dict_clean()
 {
-    pr_info("kotp: cleaning up dictionnary");
-    delete_dictionnary();
+    pr_info("kotp: cleaning up dictionary");
+    delete_dictionary();
     return 0;
 }
 
